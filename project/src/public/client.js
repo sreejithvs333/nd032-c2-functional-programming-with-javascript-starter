@@ -68,7 +68,7 @@ const getRoverData = (state, currentRover) => {
 }
 
 const getLatestImages = (currentRover) => {
-    const latestPhotos = store.get("roversData").get(currentRover);
+    let latestPhotos = store.get("roversData").get(currentRover);
     //TODO: temporarily limiting the array. Later can use lazy loading for better UX
     if (latestPhotos.length > 10) latestPhotos = latestPhotos.slice(0, 10);
     const resultHTMLString = latestPhotos.reduce((finalString, singlePhoto) => {
@@ -90,7 +90,6 @@ const getRoverDatafromApi = (rover) => {
                 throw new Error('Oops! Something went wrong! Please try again.');
             }
         }).then(data => {
-            console.log("data", data);
             let newState = store.set("currentRover", rover).setIn(["roversData", `${rover}`], data.roverData.latest_photos);
             updateStore(store, newState);
 
