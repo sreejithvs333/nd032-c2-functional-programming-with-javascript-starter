@@ -52,15 +52,7 @@ const getTodaysDate = () => {
 }
 
 const itemClicked = (item) => {
-    if (store.get("roversData").item) {
-        console.log("Data already exist");
-        updateStore(store, { currentRover: item })
-    } else {
-        console.log("Data does not exist, Api fetch and update ui");
-        getRoverDatafromApi(item);
-    }
-
-    // TODO: updateStore(store, { currentRover: item });
+    store.get("roversData").item ? updateStore(store, { currentRover: item }) : getRoverDatafromApi(item);
 };
 
 // ------------------------------------------------------  COMPONENTS
@@ -77,61 +69,15 @@ const getRoverData = (state, currentRover) => {
 
 const getLatestImages = (currentRover) => {
     const latestPhotos = store.get("roversData").get(currentRover);
-    console.log(latestPhotos);
-    //TODO: do not limit. Use lazy loading instead
-    if(latestPhotos.length>10) latestPhotos = latestPhotos.slice(0,10);
-    const resultHTMLString = latestPhotos.reduce((finalString, singlePhoto)=> {
+    //TODO: temporarily limiting the array. Later can use lazy loading for better UX
+    if (latestPhotos.length > 10) latestPhotos = latestPhotos.slice(0, 10);
+    const resultHTMLString = latestPhotos.reduce((finalString, singlePhoto) => {
         return finalString += `<li><img src="${singlePhoto.img_src}"</li>`;
-    },'');
+    }, '');
     return resultHTMLString;
 }
 
-// Example of a pure function that renders infomation requested from the backend
-const ImageOfTheDay = (apod) => {
-    // If image does not already exist, or it is not from today -- request it again
-    if (!apod || apod.get("image").get("date") != getTodaysDate()) {
-        getImageOfTheDay(store);
-    }
-
-    if (!apod) return '';
-    // check if the photo of the day is actually type video!
-    if (apod.get("media_type") === "video") {
-        return (`
-            <p>See today's featured video <a href="${apod.get("url")}">here</a></p>
-            <p>${apod.get("title")}</p>
-            <p>${apod.get("explanation")}</p>
-        `)
-    } else {
-        return (`
-            <img src="${apod.get("image").get("url")}" height="350px" width="100%" />
-            <p>${apod.get("image").get("explanation")}</p>
-        `);
-    }
-}
-
-// ------------------------------------------------------  API CALLS
-
-// Example API call
-const getImageOfTheDay = (state) => {
-
-    fetch(`http://localhost:3000/apod`)
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            } else {
-                throw new Error('Oops! Something went wrong! Please try again.');
-            }
-        }).then(apod => {
-            if (apod.image.code == 404) {
-                throw new Error(apod.image.msg);
-            } else {
-                updateStore(state, { apod });
-            }
-
-        }).catch(error => {
-            console.log(error.message);
-        });
-}
+// ------------------------------------------------------  API CALLS ------------------------------------------------------
 
 const getRoverDatafromApi = (rover) => {
     let url = new URL("http://localhost:3000/rover");
@@ -144,7 +90,7 @@ const getRoverDatafromApi = (rover) => {
                 throw new Error('Oops! Something went wrong! Please try again.');
             }
         }).then(data => {
-            
+            console.log("data", data);
             let newState = store.set("currentRover", rover).setIn(["roversData", `${rover}`], data.roverData.latest_photos);
             updateStore(store, newState);
 
