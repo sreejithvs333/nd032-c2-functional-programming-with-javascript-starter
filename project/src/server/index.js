@@ -28,7 +28,8 @@ app.get('/apod', async (req, res) => {
 app.get('/rover', async (req, res) => {
     const name = req.query.name;
     let date, url;
-    // Photos are available only for Curiosity.
+    // Photos are available only for Curiosity. The end points are refered from another Udacity student repo
+    // https://github.com/jeffcad/Udacity-Intermediate-JavaScript-Nanodegree-Project-2/blob/master/src/server/index.js
     if (name === 'Spirit') {
         date = '2010-02-01'
         url = `https://api.nasa.gov/mars-photos/api/v1/rovers/${name}/photos?earth_date=${date}&api_key=${process.env.API_KEY}`
