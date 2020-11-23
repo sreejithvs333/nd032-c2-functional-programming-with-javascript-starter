@@ -51,23 +51,29 @@ main {
   padding: 40px 20px;
   background-color: lightgray;
 }
+
 .rover-details-section p {
   word-wrap: break-word;
 }
+
 .rover-details-section p span {
   font-weight: 700;
 }
+
 .latest-photos {
   background: lightgray;
 }
+
 .latest-photos ul {
   display: flex;
   flex-wrap: wrap;
 }
+
 .latest-photos ul li {
   min-width: 250px;
   padding: 20px;
 }
+
 .latest-photos ul li img {
   max-width: 250px;
 }
