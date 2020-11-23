@@ -51,6 +51,9 @@ main {
   padding: 40px 20px;
   background-color: lightgray;
 }
+.rover-details-section p {
+  word-wrap: break-word;
+}
 .rover-details-section p span {
   font-weight: 700;
 }
