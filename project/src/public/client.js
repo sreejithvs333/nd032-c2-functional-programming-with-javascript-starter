@@ -79,11 +79,11 @@ const getLatestImagesAndDetails = (currentRover) => {
 
     const finalHTMLString =
         `<section class="rover-details-section">
-            <h1>Rover name: ${rovername}</h1>
-            <p>Launch date: ${launchDate}</p>
-            <p>Landing Date: ${landingDate}</p>
-            <p>Photos taken on: ${date}</p>
-            <p>Status: ${status}</p>
+            <p><span>Rover name:</span> ${rovername}</p>
+            <p><span>Launch date:</span> ${launchDate}</p>
+            <p><span>Landing Date:</span> ${landingDate}</p>
+            <p><span>Photos taken on:</span> ${date}</p>
+            <p><span>Status:</span> ${status}</p>
         </section>
         <section class="latest-photos">
             <ul>
