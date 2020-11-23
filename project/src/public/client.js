@@ -64,17 +64,34 @@ const header = (state) => {
 }
 
 const getRoverData = (state, currentRover) => {
-    return currentRover ? getLatestImages(currentRover) : `Select any rover to see the data`;
+    return currentRover ? getLatestImagesAndDetails(currentRover) : `Select any rover to see the data`;
 }
 
-const getLatestImages = (currentRover) => {
-    let latestPhotos = store.get("roversData").get(currentRover);
-    //TODO: temporarily limiting the array. Later can use pagination/lazy-loading for better UX
-    if (latestPhotos.length > 10) latestPhotos = latestPhotos.slice(0, 10);
-    const resultHTMLString = latestPhotos.reduce((finalString, singlePhoto) => {
+const getLatestImagesAndDetails = (currentRover) => {
+    const latestPhotos = store.get("roversData").get(currentRover).photos;
+    const roverDetails = store.get("roversData").get(currentRover).roverDetails;
+    const { date, landingDate, launchDate, rovername, status } = roverDetails;
+
+    // TODO: pagination can be done later.
+    const latestPhotosInHTML = latestPhotos.reduce((finalString, singlePhoto) => {
         return finalString += `<li><img src="${singlePhoto.img_src}"</li>`;
     }, '');
-    return resultHTMLString;
+
+    const finalHTMLString =
+        `<section class="rover-details-section">
+            <h1>Rover name: ${rovername}</h1>
+            <p>Launch date: ${launchDate}</p>
+            <p>Landing Date: ${landingDate}</p>
+            <p>Photos taken on: ${date}</p>
+            <p>Status: ${status}</p>
+        </section>
+        <section class="latest-photos">
+            <ul>
+            ${latestPhotosInHTML}
+            </ul>
+        </section>
+    `
+    return finalHTMLString;
 }
 
 // ------------------------------------------------------  API CALLS ------------------------------------------------------
@@ -90,7 +107,12 @@ const getRoverDatafromApi = (rover) => {
                 throw new Error('Oops! Something went wrong! Please try again.');
             }
         }).then(data => {
-            let newState = store.set("currentRover", rover).setIn(["roversData", `${rover}`], data.roverData);
+            let date = data.roverData[0].earth_date;
+            const { name, launch_date, landing_date, status } = data.roverData[0].rover;
+            const roverDetails = { date, rovername: name, launchDate: launch_date, landingDate: landing_date, status };
+            console.log(roverDetails);
+            const roverObject = { photos: data.roverData, roverDetails }
+            let newState = store.set("currentRover", rover).setIn(["roversData", `${rover}`], roverObject);
             updateStore(store, newState);
 
         }).catch(error => {
