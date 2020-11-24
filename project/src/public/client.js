@@ -99,6 +99,22 @@ const getLatestImagesAndDetails = (currentRover) => {
     return finalHTMLString;
 }
 
+const finalHTMLBuilder = (rovername, launchDate, landingDate, date, status, latestPhotosInHTML) => {
+    return `<section class="rover-details-section">
+                <p><span>Rover name:</span> ${rovername}</p>
+                <p><span>Launch date:</span> ${launchDate}</p>
+                <p><span>Landing Date:</span> ${landingDate}</p>
+                <p><span>Photos taken on:</span> ${date}</p>
+                <p><span>Status:</span> ${status}</p>
+            </section>
+            <section class="latest-photos">
+                <ul>
+                    ${latestPhotosInHTML}
+                </ul>
+            </section>
+            `;
+}
+
 // ------------------------------------------------------  API CALLS ------------------------------------------------------
 /** This API call fetch rover details & latest photos from the backend. */
 const getRoverDatafromApi = (rover) => {
