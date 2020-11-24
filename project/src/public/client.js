@@ -38,10 +38,11 @@ const itemClicked = (item) => {
 // ------------------------------------------------------  COMPONENTS
 /** This is a higher order function which takes two functions for the header and main content section & returns the complete UI. */
 const completeUI = (state, header, mainContent) => {
+    const headerHTMLContent = header();
     return `
     <header>
       <ul>
-        ${header(state)}
+        ${headerHTMLContent(state)}
       </ul>
     </header>
     <section class="main">
@@ -52,11 +53,13 @@ const completeUI = (state, header, mainContent) => {
     <footer></footer>
     `;
 }
-/** This function returns the HTML content for the header section. */
-const header = (state) => {
-    return state.get("rovers")
-        .map((item) => `<li class="${state.get("currentRover") === item ? "active" : "no-active"}" onClick=itemClicked("${item}")>${item}</li>`)
-        .reduce((result, rover) => result += rover);
+/** This another higher order function returns another function which returns the HTML content for the header section. */
+const header = () => {
+    return (state) => {
+        return state.get("rovers")
+            .map((item) => `<li class="${state.get("currentRover") === item ? "active" : "no-active"}" onClick=itemClicked("${item}")>${item}</li>`)
+            .reduce((result, rover) => result += rover);
+    }
 }
 /** This checks whether any rover is selected or not. 
  * If selected, it returns the corresponding rover details
