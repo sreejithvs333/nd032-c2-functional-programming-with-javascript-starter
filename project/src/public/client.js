@@ -59,7 +59,7 @@ const itemClicked = (item) => {
 
 const header = (state) => {
     return state.get("rovers")
-        .map((item) => `<li onClick=itemClicked("${item}")>${item}</li>`)
+        .map((item) => `<li class="${state.get("currentRover")===item?"active":"no-active"}" onClick=itemClicked("${item}")>${item}</li>`)
         .reduce((result, rover) => result += rover);
 }
 
