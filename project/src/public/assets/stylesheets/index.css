@@ -44,6 +44,13 @@ main {
   flex: 1;
   padding: 0px;
 }
+.main-content {
+  display: flex;
+  justify-content: center;
+  padding-top: 100px;
+  background-color: lightgray;
+  height: 100vh
+}
 
 .rover-details-section {
   display: flex;

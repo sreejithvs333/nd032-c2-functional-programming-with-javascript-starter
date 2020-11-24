@@ -64,7 +64,7 @@ const header = (state) => {
 }
 
 const getRoverData = (state, currentRover) => {
-    return currentRover ? getLatestImagesAndDetails(currentRover) : `Select any rover to see the data`;
+    return currentRover ? getLatestImagesAndDetails(currentRover) : `<section class="main-content">Select any rover to see the data</section>`;
 }
 
 const getLatestImagesAndDetails = (currentRover) => {

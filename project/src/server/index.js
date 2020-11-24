@@ -44,7 +44,6 @@ app.get('/rover', async (req, res) => {
     try {
         let roverData = await fetch(url)
             .then(res => res.json());
-        console.log("roverData: ", roverData);
         // the results are different as the end points are different.
         name === 'Curiosity' ? res.send({ roverData: roverData.latest_photos }) : res.send({ roverData: roverData.photos });
     } catch (error) {
