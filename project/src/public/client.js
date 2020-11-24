@@ -89,7 +89,7 @@ const getLatestImagesAndDetails = (currentRover) => {
             ${latestPhotosInHTML}
             </ul>
         </section>
-    `
+    `;
     return finalHTMLString;
 }
 
@@ -113,6 +113,6 @@ const getRoverDatafromApi = (rover) => {
             const newState = store.set("currentRover", rover).setIn(["roversData", `${rover}`], roverObject);
             updateStore(store, newState);
         }).catch(error => {
-            console.log(error.message);
+            alert(error.message);
         });
 }

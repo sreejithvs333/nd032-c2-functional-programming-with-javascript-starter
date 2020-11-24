@@ -36,7 +36,7 @@ app.get('/rover', async (req, res) => {
         // the results are different as the end points are different.
         name === 'Curiosity' ? res.send({ roverData: roverData.latest_photos }) : res.send({ roverData: roverData.photos });
     } catch (error) {
-        console.log('error:', error);
+        res.status(500).send("Something went wrong!");
     }
 });
 
