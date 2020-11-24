@@ -89,9 +89,6 @@ main {
   max-width: 250px;
 }
 
-footer {
-  /* footer styles */
-}
 
 /* -------------------  MOBILE  --------------------- */
 @media (max-width: 768px) {
@@ -123,16 +120,4 @@ footer {
     border: 1px solid;
     padding: 20px;
   }
-}
-
-/* -------------------  DESKTOP  -------------------- */
-
-@media (min-width: 1224px) {
-  /* use mobile */
-}
-
-/* -------------------  LARGE SCREENS  -------------- */
-
-@media (min-width: 1824px) {
-  /* use mobile */
 }

@@ -1,3 +1,4 @@
+// The store object
 let store = Immutable.Map({
     user: Immutable.Map({ name: "Sreejith" }),
     apod: '',
@@ -56,17 +57,20 @@ const itemClicked = (item) => {
 };
 
 // ------------------------------------------------------  COMPONENTS
-
+/** This function returns the HTML content for the header section. */
 const header = (state) => {
     return state.get("rovers")
-        .map((item) => `<li class="${state.get("currentRover")===item?"active":"no-active"}" onClick=itemClicked("${item}")>${item}</li>`)
+        .map((item) => `<li class="${state.get("currentRover") === item ? "active" : "no-active"}" onClick=itemClicked("${item}")>${item}</li>`)
         .reduce((result, rover) => result += rover);
 }
-
+/** This checks whether any rover is selected or not. 
+ * If selected, it returns the corresponding rover details
+ * Otherwise it will ask the user to select any rover to see the details. */
 const getRoverData = (currentRover) => {
     return currentRover ? getLatestImagesAndDetails(currentRover) : `<section class="main-content">Select any rover to see the data</section>`;
 }
 
+/** This function returns the HTML content for rover details and its latest photos. */
 const getLatestImagesAndDetails = (currentRover) => {
     const latestPhotos = store.get("roversData").get(currentRover).photos;
     const roverDetails = store.get("roversData").get(currentRover).roverDetails;
@@ -95,7 +99,7 @@ const getLatestImagesAndDetails = (currentRover) => {
 }
 
 // ------------------------------------------------------  API CALLS ------------------------------------------------------
-
+/** This API call fetch rover details & latest photos from the backend. */
 const getRoverDatafromApi = (rover) => {
     let url = new URL("http://localhost:3000/rover");
     url.searchParams.append("name", rover);
