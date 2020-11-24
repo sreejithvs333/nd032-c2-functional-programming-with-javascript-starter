@@ -49,7 +49,7 @@ main {
   justify-content: center;
   padding-top: 100px;
   background-color: lightgray;
-  height: 100vh
+  height: 100vh;
 }
 
 .rover-details-section {
@@ -103,10 +103,22 @@ footer {
   }
 }
 
-
 /* -------------------  TABLET  --------------------- */
-@media (min-width: 768px) {
-  /* use mobile */
+@media (min-width: 768px) and (max-width:1224px) {
+  header {
+    height: 200px;
+  }
+  header ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  header ul li {
+    width: 100%;
+    border: 1px solid;
+    padding: 20px;
+  }
 }
 
 /* -------------------  DESKTOP  -------------------- */
