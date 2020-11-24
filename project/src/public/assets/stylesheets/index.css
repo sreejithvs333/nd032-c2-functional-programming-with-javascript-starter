@@ -90,7 +90,18 @@ footer {
 }
 
 /* -------------------  MOBILE  --------------------- */
-
+@media (max-width: 768px) {
+  header ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  header ul li {
+    width: 100%;
+    border: 1px solid;
+  }
+}
 
 
 /* -------------------  TABLET  --------------------- */

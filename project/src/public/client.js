@@ -33,7 +33,7 @@ const App = (state) => {
     </header>
         <section class="main">
             <section>
-            ${getRoverData(state, state.get("currentRover"))}
+            ${getRoverData(state.get("currentRover"))}
             </section>
         </section>
         <footer></footer>
@@ -63,7 +63,7 @@ const header = (state) => {
         .reduce((result, rover) => result += rover);
 }
 
-const getRoverData = (state, currentRover) => {
+const getRoverData = (currentRover) => {
     return currentRover ? getLatestImagesAndDetails(currentRover) : `<section class="main-content">Select any rover to see the data</section>`;
 }
 
@@ -107,14 +107,12 @@ const getRoverDatafromApi = (rover) => {
                 throw new Error('Oops! Something went wrong! Please try again.');
             }
         }).then(data => {
-            let date = data.roverData[0].earth_date;
+            const date = data.roverData[0].earth_date;
             const { name, launch_date, landing_date, status } = data.roverData[0].rover;
             const roverDetails = { date, rovername: name, launchDate: launch_date, landingDate: landing_date, status };
-            console.log(roverDetails);
             const roverObject = { photos: data.roverData, roverDetails }
-            let newState = store.set("currentRover", rover).setIn(["roversData", `${rover}`], roverObject);
+            const newState = store.set("currentRover", rover).setIn(["roversData", `${rover}`], roverObject);
             updateStore(store, newState);
-
         }).catch(error => {
             console.log(error.message);
         });
