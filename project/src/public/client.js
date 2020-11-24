@@ -24,22 +24,7 @@ const render = async (root, state) => {
 }
 
 // create content
-const App = (state) => {
-
-    return `
-    <header>
-      <ul>
-        ${header(state)}
-      </ul>
-    </header>
-        <section class="main">
-            <section>
-            ${getRoverData(state.get("currentRover"))}
-            </section>
-        </section>
-        <footer></footer>
-    `
-}
+const App = (state) => completeUI(state, header, getRoverData);
 
 // listening for load event because page should load before any JS is called
 window.addEventListener('load', () => {
@@ -57,6 +42,22 @@ const itemClicked = (item) => {
 };
 
 // ------------------------------------------------------  COMPONENTS
+/** This is a higher order function which takes two functions for the header and main content section & returns the complete UI. */
+const completeUI = (state, header, mainContent) => {
+    return `
+    <header>
+      <ul>
+        ${header(state)}
+      </ul>
+    </header>
+    <section class="main">
+        <section>
+        ${mainContent(state.get("currentRover"))}
+        </section>
+    </section>
+    <footer></footer>
+    `;
+}
 /** This function returns the HTML content for the header section. */
 const header = (state) => {
     return state.get("rovers")
