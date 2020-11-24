@@ -31,12 +31,6 @@ window.addEventListener('load', () => {
     render(root, store)
 });
 
-// Utility functions
-const getTodaysDate = () => {
-    const today = new Date();
-    return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
-}
-
 const itemClicked = (item) => {
     store.get("roversData").item ? updateStore(store, { currentRover: item }) : getRoverDatafromApi(item);
 };
